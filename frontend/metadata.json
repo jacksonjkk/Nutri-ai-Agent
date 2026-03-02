@@ -1,0 +1,7 @@
+{
+  "name": "Kula Vyema: Uganda AI Nutrition Agent",
+  "description": "An autonomous AI nutrition agent tailored for Uganda, addressing malnutrition, obesity, and dietary planning with local food knowledge and cultural sensitivity.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

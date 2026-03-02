@@ -1,0 +1,96 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/static/
+/media/
+
+# Machine Learning Models (can be large)
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+*.onnx
+# Uncomment if you want to track models:
+# !aiagent/ml_models/*.pkl
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Training data (can be large)
+data/
+*.csv
+# Uncomment specific files you want to track:
+# !training_data.csv
+# Node.js / Frontend
+node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+.npm/
+frontend/dist/
+
+# Vite
+.vite/
+
+# Frontend environment variables
+frontend/.env.local
+frontend/.env.*.local
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Celery
+celerybeat-schedule
+
+# macOS
+.LSOverride
+
+# Temporary files
+*.tmp
+*.bak
+*.swp~
+*~.nib
