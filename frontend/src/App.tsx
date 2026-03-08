@@ -40,8 +40,8 @@ const INITIAL_PROFILE: UserProfile = {
 };
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!getAuthToken());
-  const [needsOnboarding, setNeedsOnboarding] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'logs' | 'chat' | 'foods' | 'planner' | 'profile'>('dashboard');
   const [userProfile, setUserProfile] = useState<UserProfile>(INITIAL_PROFILE);
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
@@ -49,15 +49,26 @@ export default function App() {
   const [userRole, setUserRole] = useState<'user' | 'vht'>('user');
 
   useEffect(() => {
-    if (isAuthenticated) {
-      checkUserStatus();
-    }
-  }, [isAuthenticated]);
+    const initAuth = async () => {
+      const token = getAuthToken();
+      if (token) {
+        setIsAuthenticated(true);
+        await checkUserStatus();
+      } else {
+        setIsLoading(false);
+      }
+    };
+    initAuth();
+  }, []);
 
   const checkUserStatus = async () => {
     try {
       const data = await getMe();
-      if (!data) return;
+      if (!data) {
+        setIsLoading(false);
+        setIsAuthenticated(false);
+        return;
+      }
 
       if (data.role) {
         setUserRole(data.role as any);
@@ -112,6 +123,9 @@ export default function App() {
       }
     } catch (err) {
       console.error("Dashboard Sync Error:", err);
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -145,8 +159,23 @@ export default function App() {
     { id: 'sw', label: 'Swahili' },
   ];
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#f5f5f0] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-[#F27D26] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-stone-500 font-serif font-bold animate-pulse">NutriAgent is checking your status...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
-    return <Auth onLogin={() => setIsAuthenticated(true)} />;
+    return <Auth onLogin={() => {
+      setIsAuthenticated(true);
+      setIsLoading(true);
+      checkUserStatus();
+    }} />;
   }
 
   if (needsOnboarding) {
