@@ -47,6 +47,7 @@ export default function App() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [language, setLanguage] = useState<Language>('en');
   const [userRole, setUserRole] = useState<'user' | 'vht'>('user');
+  const [needsOnboarding, setNeedsOnboarding] = useState<boolean>(false);
 
   useEffect(() => {
     const initAuth = async () => {
